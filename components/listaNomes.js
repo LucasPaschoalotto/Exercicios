@@ -1,4 +1,5 @@
-[{
+var listaNomes = [
+{
     "nome": "joão",
     "sobrenome": "silva",
     "idade": 27
@@ -22,4 +23,7 @@
     "nome": "roberto",
     "sobrenome": "alves",
     "idade": 88
-}]
+}
+]
+
+module.exports = {listaNomes};
