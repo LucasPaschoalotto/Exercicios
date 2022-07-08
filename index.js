@@ -1,15 +1,21 @@
-const lista = require("./components/listaNomes.js");
-const cImc = require("./funcoes/calcularImc.js");
-const cGordura = require("./funcoes/calcularGordura.js");
+import fetch from 'node-fetch';
 
-console.log("Lista Inicial:");
-console.log(lista.listaNomes);
+var cep = "12505110";
 
+function obterDadosCep(cep){
+    fetch(`http://viacep.com.br/ws/${cep}/json`,{
+        method: "GET"
+    })
+        .then(response => {
+            if (!response){
+                throw new Error("Erro de Requisição");
+            } else {
+            return response.json();
+            }
+        })            
+        .then(json => console.log("CEP: " + json.cep + "\nLogradouro: " + json.logradouro + "\nBairro: " + json.bairro + "\nLocalidade: " + json.localidade + "\nUF: " + json.uf))
+        .catch(error => console.log(error));        
 
-for(let i = 0; i < lista.listaNomes.length; i++){
-    lista.listaNomes[i].imc = cImc(lista.listaNomes[i].peso, lista.listaNomes[i].altura);
-    lista.listaNomes[i].gordura = cGordura(lista.listaNomes[i].imc, lista.listaNomes[i].idade, lista.listaNomes[i].sexo);
 }
 
-console.log("Lista atualizada:");
-console.log(lista.listaNomes);
+obterDadosCep(cep);
